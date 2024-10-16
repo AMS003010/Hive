@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: user123
+      POSTGRES_DB: db123
+
+  backend:
+    container_name: express_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db  # Ensures that the database starts before the backend
