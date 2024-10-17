@@ -35,7 +35,7 @@ const createVolunteerTable = async () => {
 
 const createOrganiserTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS organiser (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(30), phno TIMESTAMP, role VARCHAR(30))');
+        await pool.query('CREATE TABLE IF NOT EXISTS organiser (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(30), phno VARCHAR(30), role VARCHAR(30))');
         console.log("ORGANISER table created");
         return true;
     } catch (error) {
@@ -46,7 +46,7 @@ const createOrganiserTable = async () => {
 
 const createParticipantTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS participant (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(30), phno TIMESTAMP, registration_status VARCHAR(30))');
+        await pool.query('CREATE TABLE IF NOT EXISTS participant (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(30), phno VARCHAR(30), registration_status VARCHAR(30))');
         console.log("PARTICIPANT table created");
         return true;
     } catch (error) {
