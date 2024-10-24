@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="w-screen">
       <NavBar/>
-      <div className="board-layout relative flex flex-col justify-center items-center h-[42rem] border border-gray-200 mx-4 rounded-3xl overflow-hidden">
+      <div className="board-layout relative flex flex-col justify-center items-center h-[42rem] border border-gray-200 mx-4 rounded-3xl overflow-hidden shadow-xl">
         <div>
           <div className="rounded-3xl bg-gradient-to-br from-[#fcfcfc] to-gray-300 shadow-[18px_18px_18px_3px_rgba(204,204,204,1)]">
             <Image
