@@ -1,3 +1,5 @@
+"use client"
+
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -8,8 +10,12 @@ import Image from "next/image";
 import NavBar from "./components/Navbar";
 import FolderComp from './components/FolderComp';
 import FolderCompDown from './components/FolderCompDown';
+import { useState } from 'react';
 
 export default function Home() {
+  
+  const [selected, setSelected] = useState(0)
+
   return (
     <div className="w-screen">
       <NavBar/>
@@ -30,10 +36,10 @@ export default function Home() {
           <div className='p-2 px-4 bg-gray-500 text-white rounded-lg hover:opacity-65 cursor-pointer w-max mt-8'>Explore events</div>
         </div>
         <div className='absolute top-28 -right-20 rotate-12'>
-          <FolderComp/>
+          <FolderComp setSelected={setSelected}/>
         </div>
         <div className='absolute -bottom-10 left-20 -rotate-6'>
-          <FolderCompDown/>
+          <FolderCompDown selected={selected}/>
         </div>
       </div>
     </div>

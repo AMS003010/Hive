@@ -2,14 +2,21 @@ import { Quicksand } from 'next/font/google';
 
 const quicksand = Quicksand({ subsets: ['latin'] })
 
-export default function FolderCompDown() {
+interface comProps {
+    selected: number
+}
+
+export default function FolderCompDown({selected}: comProps) {
+
+    const selc = ["CodeFusion 2024","Arithmenia 2024","Jam 2024"]
+
     return(
         <div className={`folder ${quicksand.className} drop-shadow-xl shadow-xl`}>
             <div className='px-4 pt-3 font-semibold'>
                 Manage
             </div>
             <div className='pl-4 py-3 text-gray-500 font-semibold text-sm'>
-                CodeFusion 2024
+                {selc[selected]}
             </div>
             <div className='px-4'>
                 <div className='grid grid-cols-3 gap-2'>
