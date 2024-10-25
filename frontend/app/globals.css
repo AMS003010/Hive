@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-item:hover .nav-item-pointer  {
+    background-color: #f5ba05;
+}
+
+.board-layout {
+    background-image: 
+    radial-gradient(rgb(161, 159, 159) 10%, transparent 10%),
+    radial-gradient(rgb(161, 159, 159) 10%, transparent 10%);
+    background-position: 0px 0px, 4px 4px;
+    background-size: 8px 8px;
+    background-color: rgb(250, 250, 250);
+}
+
+
+.folder{
+    width: 330px;
+    height: 250px;  
+    border-radius: 5px 25px 25px 25px;
+    background: #f1f2f4;
+    position: relative;
+}
+  
+.folder::before{
+    content:  '';
+    position: absolute;
+    top: -18px;
+    width: 200px;
+    height: 25px;
+    background: #f1f2f4;
+    border-radius: 25px 0 0 0;
+    clip-path: path('M 0 0 L 160 0 C 185 2, 175 16, 200 18 L 0 50 z');
+}
+.folder::after{
+    content: '';
+    position: absolute;
+    left:  40px;
+    width: 85px;
+    height: 5px;
+    top: -18px;
+    background: #7036E9;
+    border-radius: 0 0 5px 5px;
+
+}
