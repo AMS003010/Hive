@@ -17,13 +17,14 @@ const addClub = async (req, res) => {
         club_chair,
         club_coordinator,
         email,
-        mem_count
+        mem_count,
+        category
     } = req.body;
     
     try {
         await pool.query(
-            'INSERT INTO club (name, description, club_chair, club_coordinator, email, mem_count) VALUES ($1, $2, $3, $4, $5, $6)',
-            [name, description, club_chair, club_coordinator, email, mem_count]
+            'INSERT INTO club (name, description, club_chair, club_coordinator, email, mem_count, category) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [name, description, club_chair, club_coordinator, email, mem_count, category]
         );
         res.status(200).send({ message: "Successfully added a CLUB" });
     } catch (error) {
@@ -102,7 +103,8 @@ const updateClub = async (req, res) => {
             club_chair,
             club_coordinator,
             email,
-            mem_count
+            mem_count,
+            category
         } = req.body;
 
         // Validate ID format
@@ -162,6 +164,11 @@ const updateClub = async (req, res) => {
             }
             updates.push(`mem_count = $${parameterCount}`);
             values.push(mem_count);
+            parameterCount++;
+        }
+        if (category !== undefined) {
+            updates.push(`category = $${parameterCount}`);
+            values.push(category);
             parameterCount++;
         }
 

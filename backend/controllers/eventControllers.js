@@ -18,12 +18,18 @@ const addEvent = async (req, res) => {
         end_date,
         location,
         created_by,
+        by_club,
         vol_count,
-        max_participants
+        org_count,
+        max_participants,
+        curr_participants,
+        budget,
+        first_contact,
+        sec_contact
     } = req.body;
     try {
-        await pool.query('INSERT INTO event (name, description, start_date, end_date, location, created_by, vol_count, max_participants) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-            [name, description, start_date, end_date, location, created_by, vol_count, max_participants]);
+        await pool.query('INSERT INTO event (name, description, start_date, end_date, location, created_by, by_club, vol_count, org_count, max_participants, curr_participants, budget, first_contact, sec_contact) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)',
+            [name, description, start_date, end_date, location, created_by, by_club, vol_count, org_count, max_participants, curr_participants, budget, first_contact, sec_contact]);
         res.status(201).json({ message: "Successfully added an EVENT" });
     } catch (error) {
         console.error("Error in adding event: ", error);
@@ -31,8 +37,34 @@ const addEvent = async (req, res) => {
     }
 }
 
+const getEvent = async (req, res) => {
+    const eventId = parseInt(req.params.id, 10);
+    console.log("FRom getEvent:",eventId,":  type:", typeof(eventId))
+
+    if (isNaN(eventId)) {
+        return res.status(400).json({ 
+            message: "Invalid ID format. ID must be a number",
+            receivedId: req.params.id
+        });
+    }
+
+    try {
+        const data = await pool.query('SELECT * FROM event WHERE id = $1', [eventId]);
+        
+        if (data.rows.length === 0) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        res.status(200).json(data.rows[0]);
+    } catch (error) {
+        console.error("Error in getting event: ", error);
+        res.status(500).json({ message: "Error retrieving event" });
+    }
+};
+
+
 const deleteEvent = async (req, res) => {
-    const id = parseInt(req.params.id, 10); // Assuming the event ID is passed as a URL parameter
+    const id = parseInt(req.params.id, 10);
     
     if (isNaN(id)) {
         return res.status(400).json({ 
@@ -76,8 +108,14 @@ const updateEvent = async (req, res) => {
         end_date,
         location,
         created_by,
+        by_club,
         vol_count,
-        max_participants
+        org_count,
+        max_participants,
+        curr_participants,
+        budget,
+        first_contact,
+        sec_contact
     } = req.body;
 
     if (isNaN(id)) {
@@ -138,14 +176,44 @@ const updateEvent = async (req, res) => {
             values.push(created_by);
             parameterCount++;
         }
+        if (by_club !== undefined) {
+            updates.push(`by_club = $${parameterCount}`);
+            values.push(by_club);
+            parameterCount++;
+        }
         if (vol_count !== undefined) {
             updates.push(`vol_count = $${parameterCount}`);
             values.push(vol_count);
             parameterCount++;
         }
+        if (org_count !== undefined) {
+            updates.push(`org_count = $${parameterCount}`);
+            values.push(org_count);
+            parameterCount++;
+        }
         if (max_participants !== undefined) {
             updates.push(`max_participants = $${parameterCount}`);
             values.push(max_participants);
+            parameterCount++;
+        }
+        if (curr_participants !== undefined) {
+            updates.push(`curr_participants = $${parameterCount}`);
+            values.push(curr_participants);
+            parameterCount++;
+        }
+        if (budget !== undefined) {
+            updates.push(`budget = $${parameterCount}`);
+            values.push(budget);
+            parameterCount++;
+        }
+        if (first_contact !== undefined) {
+            updates.push(`first_contact = $${parameterCount}`);
+            values.push(first_contact);
+            parameterCount++;
+        }
+        if (sec_contact !== undefined) {
+            updates.push(`sec_contact = $${parameterCount}`);
+            values.push(sec_contact);
             parameterCount++;
         }
 
@@ -176,5 +244,6 @@ module.exports = {
     getAllEvents,
     addEvent,
     deleteEvent,
-    updateEvent
+    updateEvent,
+    getEvent
 };

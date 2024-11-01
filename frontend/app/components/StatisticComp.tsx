@@ -27,11 +27,14 @@ export default function StatisticComp() {
         return new Intl.DateTimeFormat('en-GB', options).format(date);
     };
 
+    const handleFilter = () => {
+        router.push('/dashboard/filter');
+    }
     const handleCreate = () => {
-        router.push('/dashboard/Create');
+        router.push('/dashboard/events');
     }
     const handleStat = () => {
-        router.push('/dashboard/Stats');
+        router.push('/dashboard/stats');
     }
 
 
@@ -41,6 +44,12 @@ export default function StatisticComp() {
             <div className="flex justify-between items-center py-1">
                 <div className={`${quicksand.className} text-gray-600`}>It&apos;s {dayDate}</div>
                 <div className="flex justify-center items-center w-max gap-2">
+                    <div 
+                        className="border p-2 px-4 rounded-xl cursor-pointer hover:bg-gray-200" 
+                        onClick={handleFilter}
+                    >
+                        Filter
+                    </div>
                     <div 
                         className="border p-2 px-4 rounded-xl cursor-pointer hover:bg-gray-200" 
                         onClick={handleCreate}
