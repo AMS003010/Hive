@@ -5,7 +5,7 @@ interface Item {
     id: string;
     label: string;
     value: number | null;
-    color: string;
+    color: string | null;
 }
 
 // Destructure `data` from the props

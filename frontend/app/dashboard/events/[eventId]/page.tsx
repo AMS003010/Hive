@@ -32,7 +32,7 @@ interface GraphItem {
     id: string;
     label: string;
     value: number | null;
-    color: string;
+    color: string | null;
 }
 
 function formatDate(input: string) {

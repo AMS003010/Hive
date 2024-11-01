@@ -16,7 +16,7 @@ const createUserTable = async () => {
 
 const createClubTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS club (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, description VARCHAR(100), club_chair VARCHAR(100), club_coordinator VARCHAR(100), email VARCHAR(100), mem_count INT DEFAULT 0, category VARCHAR(100))');
+        await pool.query('CREATE TABLE IF NOT EXISTS club (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, description VARCHAR(500), club_chair VARCHAR(100), club_coordinator VARCHAR(100), email VARCHAR(100), mem_count INT DEFAULT 0, category VARCHAR(100))');
         console.log("CLUB table created");
         return true;
     } catch (error) {
@@ -71,12 +71,15 @@ const createParticipantTable = async () => {
 }
 
 const createTables = async (req, res) => {
+    console.log("AM I HITTING")
     const event_table = await createEventTable();
     const club_table = await createClubTable();
     const volunteer_table = await createVolunteerTable();
     const organiser_table = await createOrganiserTable();
     const participant_table = await createParticipantTable();
     const user_table = await createUserTable();
+    console.log("All tables done")
+    console.log(event_table,club_table, volunteer_table, organiser_table, participant_table, user_table);
     if (event_table && club_table && volunteer_table && organiser_table && participant_table && user_table)
     {
         res.status(200).send({ message: "Successfully created tables" });

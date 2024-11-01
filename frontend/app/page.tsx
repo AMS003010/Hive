@@ -1,6 +1,7 @@
 "use client"
 
 import { Inter } from 'next/font/google';
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,6 +16,10 @@ import { useState } from 'react';
 export default function Home() {
   
   const [selected, setSelected] = useState(0)
+  const router = useRouter();
+  const handleExplore = () => {
+    router.push('/dashboard');
+  }
 
   return (
     <div className="w-screen">
@@ -33,7 +38,7 @@ export default function Home() {
           <div className='text-6xl font-medium'>Think, plan and track</div>
           <div className='text-5xl text-[#a3a3a3] font-medium'>all in one place</div>
           <div className='text-sm font-extralight'>Efficiently manage your events without any extra effort</div>
-          <div className='p-2 px-4 bg-gray-500 text-white rounded-lg hover:opacity-65 cursor-pointer w-max mt-8'>Explore events</div>
+          <div className='p-2 px-4 bg-gray-500 text-white rounded-lg hover:opacity-65 cursor-pointer w-max mt-8' onClick={handleExplore}>Explore events</div>
         </div>
         <div className='absolute top-28 -right-20 rotate-12'>
           <FolderComp setSelected={setSelected}/>

@@ -10,6 +10,16 @@ const getAllClubs = async (req, res) => {
     }
 }
 
+const getCountOfEventsInClubs = async (req, res) => {
+    try {
+        const data = await pool.query('SELECT club.name AS club_name, COUNT(event.id) AS event_count FROM club JOIN event ON club.name = event.by_club GROUP BY club.id, club.name ORDER BY event_count DESC');
+        res.status(200).json(data.rows);
+    } catch (error) {
+        console.error("Error in getting all events: ", error);
+        res.status(500).json({ message: "Error retrieving events" });
+    }
+}
+
 const addClub = async (req, res) => {
     const { 
         name,
@@ -220,5 +230,6 @@ module.exports = {
     getAllClubs,
     addClub,
     deleteClub,
-    updateClub
+    updateClub,
+    getCountOfEventsInClubs
 };
