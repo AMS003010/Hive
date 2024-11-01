@@ -1,5 +1,19 @@
 const pool = require('../db');
 
+const createUserTable = async () => {
+    try {
+        await pool.query('DROP TABLE IF EXISTS users');  // Drop the existing table
+        await pool.query('CREATE TABLE users (id SERIAL PRIMARY KEY, email VARCHAR(30) NOT NULL, password VARCHAR(30), mem_count INT DEFAULT 0, name VARCHAR(30))');  // Recreate table
+        console.log("User table created");
+        return true;
+    } catch (error) {
+        console.log("Error creating USER table:", error);
+        return false;
+    }
+}
+
+
+
 const createClubTable = async () => {
     try {
         await pool.query('CREATE TABLE IF NOT EXISTS club (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, description VARCHAR(100), club_chair VARCHAR(100), club_coordinator VARCHAR(100), email VARCHAR(100), mem_count INT DEFAULT 0, category VARCHAR(100))');
@@ -10,6 +24,7 @@ const createClubTable = async () => {
         return false;
     }
 }
+
 
 const createEventTable = async () => {
     try {
@@ -61,7 +76,9 @@ const createTables = async (req, res) => {
     const volunteer_table = await createVolunteerTable();
     const organiser_table = await createOrganiserTable();
     const participant_table = await createParticipantTable();
-    if (event_table && club_table && volunteer_table && organiser_table && participant_table) {
+    const user_table = await createUserTable();
+    if (event_table && club_table && volunteer_table && organiser_table && participant_table && user_table)
+    {
         res.status(200).send({ message: "Successfully created tables" });
     } else {
         res.status(500).send({ message: "Failed to create tables" });

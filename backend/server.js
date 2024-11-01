@@ -7,6 +7,8 @@ const eventRoutes = require('./routes/eventRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const organiserRoutes = require('./routes/organiserRoutes');
 const participantRoutes = require('./routes/participantRoutes');
+const userRoutes = require('./routes/userRoutes');
+const clubRoutes = require('./routes/clubRoutes');
 
 const app = express();
 
@@ -24,6 +26,9 @@ app.use('/api/event',eventRoutes);
 app.use('/api/volunteer',volunteerRoutes);
 app.use('/api/organiser',organiserRoutes);
 app.use('/api/participant',participantRoutes);
+app.use('/api/login', userRoutes);
+app.use('/api/club', clubRoutes);
+
 
 // app.get("/setup", async (req,res) => {
 //     try {
