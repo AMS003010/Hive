@@ -18,7 +18,7 @@ export default function Login() {
     }
     // Example POST request to the backend for login
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:8000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -94,7 +94,7 @@ export default function Login() {
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account? <a href="#" className="text-blue-500 hover:underline">Sign Up</a>
+            Don't have an account? <a href="http://localhost:3000/signup" className="text-blue-500 hover:underline">Sign Up</a>
           </p>
         </div>
 
