@@ -44,6 +44,28 @@ const searchEvents = async (req, res) => {
     }
 }
 
+const getAllEntities = async (req,res) => {
+    try {
+        const result = await pool.query('SELECT * FROM get_event_statistics();');
+        
+        if (result.rows.length > 0) {
+            const stats = result.rows[0];
+            res.status(200).json({
+                totalVolunteers: stats.total_volunteers,
+                totalOrganizers: stats.total_organizers,
+                totalParticipants: stats.total_participants,
+                totalBudget: stats.total_budget
+            });
+        } else {
+            res.status(404).json({ message: "No statistics found" });
+        }
+    } catch (error) {
+        console.error("Error fetching event statistics:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
-    searchEvents
+    searchEvents,
+    getAllEntities
 }

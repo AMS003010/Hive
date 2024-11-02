@@ -28,6 +28,10 @@ const addEvent = async (req, res) => {
         sec_contact
     } = req.body;
     try {
+        const existingEvent = await pool.query('SELECT * FROM event WHERE name = $1',[name]);
+        if (existingEvent.rows.length > 0) {
+            return res.status(400).json({ message: "Event with this name already exists" });
+        }
         await pool.query('INSERT INTO event (name, description, start_date, end_date, location, created_by, by_club, vol_count, org_count, max_participants, curr_participants, budget, first_contact, sec_contact) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)',
             [name, description, start_date, end_date, location, created_by, by_club, vol_count, org_count, max_participants, curr_participants, budget, first_contact, sec_contact]);
         res.status(201).json({ message: "Successfully added an EVENT" });
@@ -240,10 +244,23 @@ const updateEvent = async (req, res) => {
     }
 }
 
+const getTotalBudgetOfAllClubs = async (req,res) => {
+    console.log("HITTING getTotalBudgetOfAllClubs")
+    try {
+        console.log("HITTING getTotalBudgetOfAllClubs")
+        const data = await pool.query('SELECT club.name AS club_name, SUM(event.budget) AS tot_budget FROM club JOIN event ON club.name = event.by_club GROUP BY club.name ORDER BY tot_budget DESC')
+        res.status(200).json(data.rows);
+    } catch (error) {
+        console.error("Error in getting total budget: ", error);
+        res.status(500).json({ message: "Error in getting total budget" });
+    }
+}
+
 module.exports = {
     getAllEvents,
     addEvent,
     deleteEvent,
     updateEvent,
-    getEvent
+    getEvent,
+    getTotalBudgetOfAllClubs
 };

@@ -17,11 +17,15 @@ const addOrganiser = async (req, res) => {
         name,
         email,
         phno,
-        role
+        event
     } = req.body;
 
     try {
-        await pool.query('INSERT INTO organiser (name, email, phno, role) VALUES ($1, $2, $3, $4)', [name, email, phno, role]);
+        const existingOrganizer = await pool.query('SELECT * FROM organiser WHERE name = $1 AND event = $2',[name, event]);
+        if (existingOrganizer.rows.length > 0) {
+            return res.status(400).json({ message: "Organizer with this name for this event already exists" });
+        }
+        await pool.query('INSERT INTO organiser (name, email, phno, event) VALUES ($1, $2, $3, $4)', [name, email, phno, event]);
         res.status(200).send({ message: "Successfully added an ORGANISER" });
     } catch (error) {
         console.log("Error in adding organiser: ", error);
@@ -60,7 +64,7 @@ const updateOrganiser = async (req, res) => {
         name,
         email,
         phno,
-        role
+        event
     } = req.body;
 
     try {
@@ -91,9 +95,9 @@ const updateOrganiser = async (req, res) => {
             values.push(phno);
             parameterCount++;
         }
-        if (role) {
-            updates.push(`role = $${parameterCount}`);
-            values.push(role);
+        if (event) {
+            updates.push(`event = $${parameterCount}`);
+            values.push(event);
             parameterCount++;
         }
 

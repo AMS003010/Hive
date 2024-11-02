@@ -5,13 +5,15 @@ const {
     addEvent,
     deleteEvent,
     updateEvent,
-    getEvent
+    getEvent,
+    getTotalBudgetOfAllClubs
 } =  require('../controllers/eventControllers');
 
 
 const router = express.Router();
 
 router.get("/",getAllEvents);
+router.get("/budget",getTotalBudgetOfAllClubs);
 router.post("/",addEvent);
 router.delete("/:id", deleteEvent);
 router.patch("/:id", updateEvent);

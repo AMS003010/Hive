@@ -15,10 +15,15 @@ const addParticipant = async (req, res) => {
         name,
         email,
         phno,
-        registration_status
+        registration_status,
+        event
     } = req.body;
     try {
-        await pool.query('INSERT INTO participant (name, email, phno, registration_status) VALUES ($1, $2, $3, $4)', [name, email, phno, registration_status]);
+        const existingParticipant = await pool.query('SELECT * FROM participant WHERE name = $1 AND event = $2',[name, event]);
+        if (existingParticipant.rows.length > 0) {
+            return res.status(400).json({ message: "Participant with this name for this event already exists" });
+        }
+        await pool.query('INSERT INTO participant (name, email, phno, registration_status, event) VALUES ($1, $2, $3, $4, $5)', [name, email, phno, registration_status, event]);
         res.status(200).send({ message: "Successfully added a PARTICIPANT" });
     } catch (error) {
         console.log("Error in adding participant: ", error);
@@ -70,7 +75,7 @@ const deleteParticipant = async (req, res) => {
 
 const updateParticipant = async (req, res) => {
     const id = parseInt(req.params.id, 10);
-    const { name, email, phno, registration_status } = req.body;
+    const { name, email, phno, registration_status, event } = req.body;
 
     try {
         // Validate ID format
@@ -111,6 +116,11 @@ const updateParticipant = async (req, res) => {
         if (registration_status !== undefined) {
             updates.push(`registration_status = $${parameterCount}`);
             values.push(registration_status);
+            parameterCount++;
+        }
+        if (event !== undefined) {
+            updates.push(`event = $${parameterCount}`);
+            values.push(event);
             parameterCount++;
         }
 

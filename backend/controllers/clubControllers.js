@@ -32,6 +32,10 @@ const addClub = async (req, res) => {
     } = req.body;
     
     try {
+        const existingClub = await pool.query('SELECT * FROM club WHERE name = $1',[name]);
+        if (existingClub.rows.length > 0) {
+            return res.status(400).json({ message: "Club with this name already exists" });
+        }
         await pool.query(
             'INSERT INTO club (name, description, club_chair, club_coordinator, email, mem_count, category) VALUES ($1, $2, $3, $4, $5, $6, $7)',
             [name, description, club_chair, club_coordinator, email, mem_count, category]

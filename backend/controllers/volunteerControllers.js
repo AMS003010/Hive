@@ -15,10 +15,14 @@ const addVolunteer = async (req, res) => {
         name,
         email,
         phno,
-        role
+        event
     } = req.body;
     try {
-        await pool.query('INSERT INTO volunteer (name,email,phno,role) VALUES ($1, $2, $3, $4)', [name, email, phno, role]);
+        const existingVolunteer = await pool.query('SELECT * FROM volunteer WHERE name = $1 AND event = $2',[name, event]);
+        if (existingVolunteer.rows.length > 0) {
+            return res.status(400).json({ message: "Volunteer with this name for this event already exists" });
+        }
+        await pool.query('INSERT INTO volunteer (name,email,phno,event) VALUES ($1, $2, $3, $4)', [name, email, phno, event]);
         res.status(200).send({message: "Successfully added a VOLUNTEER"})
     } catch (error) {
         console.log("Error in adding volunteer: ", error);
@@ -72,7 +76,7 @@ const deleteVolunteer = async (req, res) => {
 const updateVolunteer = async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10);
-        const { name, email, phno, role } = req.body;
+        const { name, email, phno, event } = req.body;
 
         // Validate ID format
         if (isNaN(id)) {
@@ -102,9 +106,9 @@ const updateVolunteer = async (req, res) => {
             values.push(phno);
             parameterCount++;
         }
-        if (role !== undefined) {
-            updates.push(`role = $${parameterCount}`);
-            values.push(role);
+        if (event !== undefined) {
+            updates.push(`event = $${parameterCount}`);
+            values.push(event);
             parameterCount++;
         }
         

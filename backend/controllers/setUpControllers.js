@@ -39,7 +39,7 @@ const createEventTable = async () => {
 
 const createVolunteerTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS volunteer (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100), phno VARCHAR(100), role VARCHAR(100))');
+        await pool.query('CREATE TABLE IF NOT EXISTS volunteer (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100), phno VARCHAR(100), event VARCHAR(100))');
         console.log("VOLUNTEER table created");
         return true;
     } catch (error) {
@@ -50,7 +50,7 @@ const createVolunteerTable = async () => {
 
 const createOrganiserTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS organiser (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(100), phno VARCHAR(100), role VARCHAR(100))');
+        await pool.query('CREATE TABLE IF NOT EXISTS organiser (id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL, email VARCHAR(100), phno VARCHAR(100), event VARCHAR(100))');
         console.log("ORGANISER table created");
         return true;
     } catch (error) {
@@ -61,7 +61,7 @@ const createOrganiserTable = async () => {
 
 const createParticipantTable = async () => {
     try {
-        await pool.query('CREATE TABLE IF NOT EXISTS participant (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100), phno VARCHAR(100), registration_status VARCHAR(100))');
+        await pool.query('CREATE TABLE IF NOT EXISTS participant (id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100), phno VARCHAR(100), registration_status VARCHAR(100), event VARCHAR(100))');
         console.log("PARTICIPANT table created");
         return true;
     } catch (error) {
@@ -70,17 +70,44 @@ const createParticipantTable = async () => {
     }
 }
 
+const createStatisticsFunction = async () => {
+    try {
+        const query = `
+            CREATE OR REPLACE FUNCTION get_event_statistics()
+            RETURNS TABLE (
+                total_volunteers INT,
+                total_organizers INT,
+                total_participants INT,
+                total_budget INT
+            ) AS $$
+            BEGIN
+                RETURN QUERY
+                SELECT
+                    (SELECT COALESCE(SUM(vol_count), 0)::INT FROM event) AS total_volunteers,
+                    (SELECT COALESCE(SUM(org_count), 0)::INT FROM event) AS total_organizers,
+                    (SELECT COALESCE(SUM(curr_participants), 0)::INT FROM event) AS total_participants,
+                    (SELECT COALESCE(SUM(budget), 0)::INT FROM event) AS total_budget;
+            END;
+            $$ LANGUAGE plpgsql;
+        `;
+        await pool.query(query);
+        console.log("Statistics SQL function created");
+        return true;
+    } catch (error) {
+        console.error("Error creating statistics function:", error);
+        return false;
+    }
+};
+
 const createTables = async (req, res) => {
-    console.log("AM I HITTING")
     const event_table = await createEventTable();
     const club_table = await createClubTable();
     const volunteer_table = await createVolunteerTable();
     const organiser_table = await createOrganiserTable();
     const participant_table = await createParticipantTable();
     const user_table = await createUserTable();
-    console.log("All tables done")
-    console.log(event_table,club_table, volunteer_table, organiser_table, participant_table, user_table);
-    if (event_table && club_table && volunteer_table && organiser_table && participant_table && user_table)
+    const statistics_function = await createStatisticsFunction();
+    if (event_table && club_table && volunteer_table && organiser_table && participant_table && user_table && statistics_function)
     {
         res.status(200).send({ message: "Successfully created tables" });
     } else {
