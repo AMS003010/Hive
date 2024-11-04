@@ -68,20 +68,12 @@ const validateId = (req, res, next) => {
     next();
 };
 
-// Rate limiting middleware (optional, requires 'express-rate-limit' package)
-const rateLimit = require('express-rate-limit');
 
-const createAccountLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour window
-    max: 5, // limit each IP to 5 create account requests per window
-    message: 'Too many accounts created from this IP, please try again after an hour'
-});
 
 // Routes
 router.get('/', getAllUsers);
 
 router.post('/', 
-    createAccountLimiter, 
     validateUser, 
     addUser
 );

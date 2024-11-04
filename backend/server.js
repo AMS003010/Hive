@@ -27,7 +27,7 @@ app.use('/api/event',eventRoutes);
 app.use('/api/volunteer',volunteerRoutes);
 app.use('/api/organiser',organiserRoutes);
 app.use('/api/participant',participantRoutes);
-app.use('/api/login', userRoutes);
+app.use('/api/signup', userRoutes);
 app.use('/api/club', clubRoutes);
 app.use('/api/search', searchRoutes);
 

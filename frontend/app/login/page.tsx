@@ -1,4 +1,4 @@
-"use client"; // Add this line at the very top
+"use client";
 
 import { useState } from 'react';
 
@@ -6,44 +6,65 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [welcomeMessage, setWelcomeMessage] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // Clear any existing errors
+    setError('');
+    setWelcomeMessage('');
 
-    // Basic validation
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
     }
-    // Example POST request to the backend for login
-    try {
-      const response = await fetch('http://localhost:8000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+    try {
+      // First check if user exists and get their data
+      const checkUserResponse = await fetch(`http://localhost:8000/api/signup`);
+      const users = await checkUserResponse.json();
+      
+      // First check if email exists
+      const emailExists = users.some(u => u.email === email);
+      
+      if (!emailExists) {
+        setError(
+          <div>
+            Email does not exist. <a href="/signup" className="text-blue-600 hover:underline font-medium">Create account</a> to sign up.
+          </div>
+        );
+        return;
       }
 
-      // Redirect or show success message
-      alert('Login successful');
+      // If email exists, check password
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        setWelcomeMessage(`Welcome ${user.name}!`);
+        // Here you could also save the user's session/token
+        // and redirect to a dashboard page
+      } else {
+        setError('Incorrect password. Please try again.');
+      }
     } catch (error) {
-      setError(error.message);
+      setError('Something went wrong. Please try again.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 to-blue-500">
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center" 
+         style={{ backgroundImage: "url('/handshake.jpeg')" }}>
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-2xl border border-gray-300">
         <h2 className="text-3xl font-bold text-center text-gray-800">Welcome Back!</h2>
-        
+
         {error && (
           <div className="p-4 text-red-600 bg-red-100 border border-red-500 rounded-md shadow">
             {error}
+          </div>
+        )}
+
+        {welcomeMessage && (
+          <div className="p-4 text-green-600 bg-green-100 border border-green-500 rounded-md shadow">
+            {welcomeMessage}
           </div>
         )}
 
@@ -60,9 +81,6 @@ export default function Login() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 ease-in-out shadow-sm hover:shadow-lg hover:border-blue-400"
               placeholder="Enter your email"
               required
-              style={{
-                transition: 'box-shadow 0.3s ease-in-out',
-              }}
             />
           </div>
 
@@ -78,9 +96,6 @@ export default function Login() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 ease-in-out shadow-sm hover:shadow-lg hover:border-blue-400"
               placeholder="Enter your password"
               required
-              style={{
-                transition: 'box-shadow 0.3s ease-in-out',
-              }}
             />
           </div>
 
@@ -94,26 +109,10 @@ export default function Login() {
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account? <a href="http://localhost:3000/signup" className="text-blue-500 hover:underline">Sign Up</a>
+            Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a>
           </p>
         </div>
-
-        <style jsx>{`
-          input::placeholder {
-            color: #a0aec0; /* Light gray for placeholder text */
-          }
-          input:focus {
-            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* Enhanced focus shadow */
-          }
-          .shadow-md {
-            transition: all 0.3s ease-in-out; /* Smooth transition for shadows */
-          }
-          .shadow-lg:hover {
-            transform: translateY(-2px); /* Slight lift on hover for inputs */
-          }
-        `}</style>
       </div>
     </div>
   );
 }
-
