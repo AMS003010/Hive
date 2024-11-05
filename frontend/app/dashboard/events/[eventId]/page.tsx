@@ -431,7 +431,7 @@ export default function EventData() {
                 <ParticipantList event={eventData ? eventData?.name : "empty"}/>
             </div>
             <div>
-                <UserList/>
+                <UserList event={eventData ? eventData?.name : "empty"}/>
             </div>
         </div>
     )

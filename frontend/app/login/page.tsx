@@ -1,8 +1,11 @@
 "use client";
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -40,8 +43,10 @@ export default function Login() {
       
       if (user) {
         setWelcomeMessage(`Welcome ${user.name}!`);
-        // Here you could also save the user's session/token
-        // and redirect to a dashboard page
+        // Redirect to the home page after a short delay
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1000);
       } else {
         setError('Incorrect password. Please try again.');
       }
@@ -51,8 +56,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-cover bg-center" 
-         style={{ backgroundImage: "url('/handshake.jpeg')" }}>
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-2xl border border-gray-300">
         <h2 className="text-3xl font-bold text-center text-gray-800">Welcome Back!</h2>
 

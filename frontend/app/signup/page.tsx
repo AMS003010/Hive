@@ -38,7 +38,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-cover" style={{ backgroundImage: "url('/handshake.jpeg')" }}>
+    <div className="flex items-center justify-center min-h-screen bg-cover" >
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-2xl border border-gray-300">
         <h2 className="text-3xl font-bold text-center text-gray-800">Create Account</h2>
         
