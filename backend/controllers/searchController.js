@@ -65,7 +65,49 @@ const getAllEntities = async (req,res) => {
     }
 }
 
+const getEventVolunteers = async (req,res) => {
+    const { 
+        event,
+    } = req.body;
+    try {
+        const data = await pool.query('SELECT * FROM volunteer WHERE event = $1',[event])
+        res.status(200).json(data.rows);
+    } catch (error) {
+        console.error("Error fetching event statistics:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+const getEventOrganisers = async (req,res) => {
+    const { 
+        event,
+    } = req.body;
+    try {
+        const data = await pool.query('SELECT * FROM organiser WHERE event = $1',[event])
+        res.status(200).json(data.rows);
+    } catch (error) {
+        console.error("Error fetching event statistics:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+const getEventParticpants = async (req,res) => {
+    const { 
+        event,
+    } = req.body;
+    try {
+        const data = await pool.query('SELECT * FROM participant WHERE event = $1',[event])
+        res.status(200).json(data.rows);
+    } catch (error) {
+        console.error("Error fetching event statistics:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 module.exports = {
     searchEvents,
-    getAllEntities
+    getAllEntities,
+    getEventVolunteers,
+    getEventParticpants,
+    getEventOrganisers
 }
