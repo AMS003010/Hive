@@ -2,7 +2,13 @@
 Collaborative event planning platform with Postgresql + Express.js + Next.js. With Prometheus metrics and Grafana dashboard
 
 <br/>
-![image](https://github.com/user-attachments/assets/5a9da58a-bdba-4b8b-9ba8-355f19996fcb)
+
+![image](https://github.com/AMS003010/Hive/blob/main/images/home.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/admin-dashbaord.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/stats.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/filter.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/event-1.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/event-2.png)
 
 
 ## Prerequisites
