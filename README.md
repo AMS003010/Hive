@@ -1,5 +1,5 @@
 # Hive
-Collaborative event planning platform with Postgresql + Express.js + Next.js
+Collaborative event planning platform with Postgresql + Express.js + Next.js. With Prometheus metrics and Grafana dashboard
 
 ## Prerequisites
  - Node
