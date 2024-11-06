@@ -1,6 +1,10 @@
 # Hive
 Collaborative event planning platform with Postgresql + Express.js + Next.js. With Prometheus metrics and Grafana dashboard
 
+<br/>
+![image](https://github.com/user-attachments/assets/5a9da58a-bdba-4b8b-9ba8-355f19996fcb)
+
+
 ## Prerequisites
  - Node
  - Docker
