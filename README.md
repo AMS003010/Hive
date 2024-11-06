@@ -24,6 +24,15 @@ Run the database, API server and metric dashboard
 cd Hive
 docker compose up
 ```
+
+<br/>
+
+Make a POST request to "http://localhost:8000/api/setup" to setup all the tables, functions and triggers in the Postgresql Database 
+(cURL not necessary, any kind client for sending a request will work)
+```
+curl -X POST http://localhost:8000/api/setup
+```
+
 <br/>
 
 Run the frontend
