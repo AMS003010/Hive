@@ -4,6 +4,8 @@ Collaborative event planning platform with Postgresql + Express.js + Next.js. Wi
 <br/>
 
 ![image](https://github.com/AMS003010/Hive/blob/main/images/home.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/login.png)
+![image](https://github.com/AMS003010/Hive/blob/main/images/signup.png)
 ![image](https://github.com/AMS003010/Hive/blob/main/images/admin-dashbaord.png)
 ![image](https://github.com/AMS003010/Hive/blob/main/images/stats.png)
 ![image](https://github.com/AMS003010/Hive/blob/main/images/filter.png)
