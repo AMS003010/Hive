@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node utils/test.js",
     "start": "node server.js",
     "build": "mkdir -p dist && find . -maxdepth 1 -mindepth 1 ! -name 'dist' -exec cp -r {} dist \\; && rm -rf dist/node_modules"
   },
@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "express-rate-limit": "^7.4.1",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "pg": "^8.13.0",
     "prom-client": "^15.1.3"
