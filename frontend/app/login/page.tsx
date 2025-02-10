@@ -1,68 +1,73 @@
 "use client";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [welcomeMessage, setWelcomeMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [welcomeMessage, setWelcomeMessage] = useState("");
 
-  const handleLogin = async (e) => {
+  interface User {
+    name: string;
+    email: string;
+    password: string;
+  }
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
-    setWelcomeMessage('');
+    setError("");
+    setWelcomeMessage("");
 
     if (!email || !password) {
-      setError('Please enter both email and password');
+      setError("Please enter both email and password");
       return;
     }
 
     try {
-      // First check if user exists and get their data
-      const checkUserResponse = await fetch(`https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/signup`);
+      // Fetch user data (Assuming correct API endpoint)
+      const checkUserResponse = await fetch(
+        `https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/signup`
+      );
       const users = await checkUserResponse.json();
-      
-      // First check if email exists
-      const emailExists = users.some(u => u.email === email);
-      
-      if (!emailExists) {
-        setError(
-          <div>
-            Email does not exist. <a href="/signup" className="text-blue-600 hover:underline font-medium">Create account</a> to sign up.
-          </div>
-        );
+
+      console.log(users)
+
+      const user = users.find((u: User) => u.email === email);
+
+      if (!user) {
+        setError("Email does not exist. Please create an account.");
         return;
       }
 
-      // If email exists, check password
-      const user = users.find(u => u.email === email && u.password === password);
-      
-      if (user) {
-        setWelcomeMessage(`Welcome ${user.name}!`);
-        // Redirect to the home page after a short delay
-        setTimeout(() => {
-          router.push('/dashboard');
-        }, 1000);
-      } else {
-        setError('Incorrect password. Please try again.');
+      if (user.password !== password) {
+        setError("Incorrect password. Please try again.");
+        return;
       }
-    } catch (error) {
-      setError('Something went wrong. Please try again.');
+
+      setWelcomeMessage(`Welcome ${user.name}!`);
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 300);
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-cover bg-center">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-2xl border border-gray-300">
-        <h2 className="text-3xl font-bold text-center text-gray-800">Welcome Back!</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800">
+          Welcome Back!
+        </h2>
 
         {error && (
           <div className="p-4 text-red-600 bg-red-100 border border-red-500 rounded-md shadow">
-            {error}
+            {error} <a href="/signup" className="text-blue-600 hover:underline font-medium">Create account</a>
           </div>
         )}
 
@@ -113,7 +118,10 @@ export default function Login() {
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a>
+            Don&apos;t have an account?{" "}
+            <a href="/signup" className="text-blue-500 hover:underline">
+              Sign Up
+            </a>
           </p>
         </div>
       </div>
