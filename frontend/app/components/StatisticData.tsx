@@ -71,7 +71,7 @@ export default function StatisticData() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/club/count', {
+                const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/club/count', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -102,7 +102,7 @@ export default function StatisticData() {
 
         const fetchData2 = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/event/budget', {
+                const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/event/budget', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -135,7 +135,7 @@ export default function StatisticData() {
         
         const fetchData3 = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/search', {
+                const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/search', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });

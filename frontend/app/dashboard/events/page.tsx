@@ -43,7 +43,7 @@ export default function Create() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/event', {
+            const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/event', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });

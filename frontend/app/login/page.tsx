@@ -23,7 +23,7 @@ export default function Login() {
 
     try {
       // First check if user exists and get their data
-      const checkUserResponse = await fetch(`http://localhost:8000/api/signup`);
+      const checkUserResponse = await fetch(`https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/signup`);
       const users = await checkUserResponse.json();
       
       // First check if email exists

@@ -37,7 +37,7 @@ export default function ParticipantList ({event}: comProps) {
         if (event=="empty") return;
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/search/participant`, {
+                const response = await fetch(`https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/search/participant`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ event:event })

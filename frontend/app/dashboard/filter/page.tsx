@@ -48,7 +48,7 @@ export default function Stats() {
         const fetchData = async () => {
         try {
             console.log({ category: category!=="Choose category" ? null : category, limit: limit ? limit : null })
-            const response = await fetch('http://localhost:8000/api/search', {
+            const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/search', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ category: category!=="Choose category" ? category : "null", limit: limit ? limit : "null" })

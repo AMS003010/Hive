@@ -33,7 +33,7 @@ export default function UserList({ event }: UserListProps) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/signup`, {
+                const response = await fetch(`https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/signup`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -58,7 +58,7 @@ export default function UserList({ event }: UserListProps) {
 
     const handleRoleChange = async (user: User, role: string) => {
         const endpoint = role === 'organiser' ? 'organiser' : 'volunteer';
-        const url = `http://localhost:8000/api/${endpoint}`;
+        const url = `https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/${endpoint}`;
         const payload = {
             name: user.name,
             email: user.email,

@@ -44,7 +44,7 @@ export default function NavBar () {
             </div>
             <div className='text-base flex justify-between gap-6 w-max items-center'>
                 <a className='p-2 px-4 border-[2px] border-gray-400 rounded-lg hover:text-white hover:bg-gray-400 cursor-pointer' href='/login'>Login</a>
-                <div className='p-2 px-4 bg-gray-500 text-white rounded-lg hover:opacity-65 cursor-pointer'>Get a Demo</div>
+                <div className='p-2 px-4 bg-gray-500 text-white rounded-lg hover:opacity-65 cursor-pointer' onClick={handleExplore}>Get a Demo</div>
             </div>
         </div>
     )

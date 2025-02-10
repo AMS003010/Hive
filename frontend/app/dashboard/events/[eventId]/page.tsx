@@ -107,7 +107,7 @@ export default function EventData() {
         setColor(gradColor())
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/api/event/${eventId}`, {
+                const response = await fetch(`https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/event/${eventId}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
                 });

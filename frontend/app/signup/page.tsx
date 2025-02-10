@@ -15,7 +15,7 @@ export default function Signup() {
     setLoading(true); // Set loading state
 
     try {
-      const response = await fetch('http://localhost:8000/api/signup', { 
+      const response = await fetch('https://fellow-griselda-ams-org-8d17855c.koyeb.app/api/signup', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
