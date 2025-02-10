@@ -50,3 +50,10 @@ npm run dev
 View application at `http://localhost:3001`
 
 View metric dashboard at `http://localhost:3000`. Also add prometheus as a data source to grafana and configure your dashboard.
+
+<br/>
+
+## Depolyed
+- It is deployed at [hiveapp.vercel.app](https://hiveapp.vercel.app/)
+- The Postgres database and backend was deployed seperately on [Koyeb](https://www.koyeb.com/)
+- The Frontend is hosted on [Vercel](https://vercel.com/)
