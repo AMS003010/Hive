@@ -34,7 +34,7 @@ export default function StatisticComp() {
         router.push('/dashboard/events');
     }
     const handleStat = () => {
-        router.push('/dashboard/stats');
+        router.push('/dashboard');
     }
 
 

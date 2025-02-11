@@ -22,7 +22,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-screen">
+    <div className="overflow-x-hidden mb-5">
       <NavBar/>
       <div className="board-layout relative flex flex-col justify-center items-center h-[42rem] border border-gray-200 mx-4 rounded-3xl overflow-hidden shadow-xl">
         <div>
