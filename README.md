@@ -19,7 +19,7 @@ Collaborative event planning platform built with PostgreSQL, Express.js, and Nex
 | **[Node.js](https://nodejs.org/)** | JavaScript runtime for backend development |
 | **[Express.js](https://expressjs.com/)** | Web framework for Node.js |
 | **[PostgreSQL](https://www.postgresql.org/)** | Relational database management system |
-| **[Sequelize](https://sequelize.org/)** | ORM for PostgreSQL |
+| **[pg](https://www.npmjs.com/package/pg)** | ORM for PostgreSQL |
 | **[Next.js](https://nextjs.org/)** | React framework for frontend development |
 | **[Grafana](https://grafana.com/)** | Monitoring and observability platform |
 | **[Prometheus](https://prometheus.io/)** | Time-series monitoring system |
