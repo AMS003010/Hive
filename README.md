@@ -72,7 +72,7 @@ npm run dev
 ## 🌍 Deployment
 Project Hive is deployed at:
 - **Frontend**: [Hive on Vercel](https://hiveapp.vercel.app/)
-- **Backend & Database**: Hosted on [Koyeb](https://www.koyeb.com/)
+- **Backend & Database**: Hosted on [Koyeb](https://www.koyeb.com/)  (_Sorry can't expose the endpoints, dont want any DDOS_ 😙)
 
 ---
 
