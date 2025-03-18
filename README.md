@@ -37,7 +37,7 @@ Make a POST request to setup all the tables, functions, and triggers in PostgreS
 ```sh
 curl -X POST http://localhost:8000/api/setup
 ```
-*(Any API client like Postman or cURL can be used.)*
+*(Any API client like Postman or Insomnia can be used.)*
 
 ### 4️⃣ Start the Frontend
 ```sh
