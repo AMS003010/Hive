@@ -76,7 +76,7 @@ Project Hive is deployed at:
 
 ---
 
-👨‍💻 Maintainers
+## 👨‍💻 Maintainers
 This project is maintained by Abhijith M S (AMS003010).
 
 ---
